@@ -73,3 +73,22 @@ The second file, 'genome_attributes.csv', provides the attribute descriptions fo
 
 attributeId,attribute
 
+## Methods
+### Baseline
+
+b<sub>ui</sub> = &mu; + a<sub>u</sub> + b<sub>i</sub>  
+Perform **mini-batch gradient descent** to update &mu;, a<sub>u</sub> and b<sub>i</sub>.  
+Perform hyperparamter search to find batch size = 750 and &eta;(Learning Rate) = 0.001
+
+### Neighborhood
+
+Use similarity between movie of choice and the other movies rated by the user of choice to predict.  
+Similarity condition used is **Shrunk Coefficient** defined as  
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;S_{ij}=\frac{n_{ij}}{n_{ij}+\lambda_2}\rho_{ij}" title="\Large S_{ij}=\frac{n_{ij}}{n_{ij}+\lambda_2}\rho_{ij}" />  
+n<sub>ij</sub> = Number of users who have rated both movies i and j  
+&rho;<sub>ij</sub> = Pearson Correlation Coefficient based on the common users between movie i and j  
+&lambda;<sub>2</sub> = Hyperparameter  
+  
+We then find prediction as  
+<a href="https://www.codecogs.com/eqnedit.php?latex=\hat{r}_{ui}=b_{ui}&plus;\frac{\sum_{j&space;\in&space;S^{k}(i;u)}&space;s_{ij}\left(r_{uj}-b_{u&space;j}\right)}{\sum_{j&space;\in&space;S^{k}(i;u)}&space;s_{ij}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\hat{r}_{ui}=b_{ui}&plus;\frac{\sum_{j&space;\in&space;S^{k}(i;u)}&space;s_{ij}\left(r_{uj}-b_{u&space;j}\right)}{\sum_{j&space;\in&space;S^{k}(i;u)}&space;s_{ij}}" title="\hat{r}_{ui}=b_{ui}+\frac{\sum_{j \in S^{k}(i;u)} s_{ij}\left(r_{uj}-b_{u j}\right)}{\sum_{j \in S^{k}(i;u)} s_{ij}}" /></a>  
+where S<sup>k</sup>(i;u) is the lsit of movies rated by user u which are the closest to movie i based on Shrunk Coefficient Similarity.
